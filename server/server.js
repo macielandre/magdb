@@ -8,7 +8,7 @@ const { PORT, HOST_NAME } = process.env
 
 const logger = log4js.getLogger('server')
 
-logger.level = 'debug'
+logger.level = 'info'
 
 CollectionService.fulfillCollections()
 
@@ -20,7 +20,7 @@ const methodsRedirect = new Map([
 ])
 
 server.listen(PORT, HOST_NAME, () => {
-    console.log(`listening on port ${PORT}`)
+    logger.info(`listening on port ${PORT}`)
 })
 
 server.on('connection', socket => {
