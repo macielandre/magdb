@@ -9,9 +9,9 @@ const socket = new net.Socket()
 socket.connect(PORT, HOST_NAME, () => {
     socket.write(JSON.stringify({
         collectionName: 'cats',
-        method: 'findOne',
+        method: 'findOnes',
         body: {
-            breed: 'Bengal'
+            breed: 'Not defined'
         }
     }))
 
