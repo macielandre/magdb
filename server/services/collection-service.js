@@ -34,15 +34,19 @@ class CollectionService {
 
     static updateOne({ collection, jsonData }) {
         const query = jsonData.body
-        const collectionEntries = Object.entries(collection)
-    
-        for(const [key, document] of collectionEntries) {
-            if(ObjectHelper.isValuesInsideObject(document, query)) {
-                return document
-            }
+        const data = jsonData.newData
+
+        const foundDoc = CollectionService.findOne({ collection, jsonData })
+
+        if(foundDoc) {
+            collections[foundDoc._id] = Object.assign(foundDoc, data)
+
+            FileHelper.saveToFile(jsonData.collectionName, collection)
+
+            return collections[foundDoc._id]
         }
-    
-        return null
+
+        return null 
     }
 
     static insertOne({ collection, jsonData }) {
