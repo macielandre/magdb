@@ -17,6 +17,7 @@ const server = net.createServer()
 const methodsRedirect = new Map([
     ['insertOne', CollectionService.insertOne],
     ['updateOne', CollectionService.updateOne],
+    ['deleteOne', CollectionService.deleteOne],
     ['findOne', CollectionService.findOne]
 ])
 

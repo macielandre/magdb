@@ -33,9 +33,7 @@ class CollectionService {
     }
 
     static updateOne({ collection, jsonData }) {
-        const query = jsonData.body
         const data = jsonData.newData
-
         const foundDoc = CollectionService.findOne({ collection, jsonData })
 
         if(foundDoc) {
@@ -52,14 +50,30 @@ class CollectionService {
     static insertOne({ collection, jsonData }) {
         const _id = new Date().getTime();
 
-      collection[_id] = {
-        ...jsonData.body,
-        _id
-      }
+        collection[_id] = {
+          ...jsonData.body,
+          _id
+        }
 
-      FileHelper.saveToFile(jsonData.collectionName, collection)
+        FileHelper.saveToFile(jsonData.collectionName, collection)
 
-      return { insertedId: _id }
+        return { insertedId: _id }
+    }
+
+    static deleteOne({ collection, jsonData }) {
+        const foundDoc = CollectionService.findOne({ collection, jsonData })
+
+        if(foundDoc) {
+            const temporaryDoc = collection[foundDoc._id]
+
+            delete collection[foundDoc._id]
+
+            FileHelper.saveToFile(jsonData.collectionName, collection)
+
+            return temporaryDoc
+        }
+
+        return null
     }
 
     static getCollection(collectionName) {
